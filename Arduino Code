@@ -1,0 +1,50 @@
+Servo Motor Code 
+
+
+#include <Servo.h>
+
+Servo myServo;
+
+int minAngle = 30;
+int maxAngle = 150;
+int currentAngle = 90;
+
+void setup() {
+  myServo.attach(9);  // Connect servo signal wire to pin 9
+  myServo.write(currentAngle);  // Start at midpoint
+  randomSeed(analogRead(0));    // Seed the random number generator
+}
+
+void loop() {
+  int targetAngle = random(minAngle, maxAngle + 1);
+
+  // Smooth transition to the new angle
+  if (targetAngle > currentAngle) {
+    for (int pos = currentAngle; pos <= targetAngle; pos++) {
+      myServo.write(pos);
+      delay(10);
+    }
+  } else {
+    for (int pos = currentAngle; pos >= targetAngle; pos--) {
+      myServo.write(pos);
+      delay(10);
+    }
+  }
+
+  currentAngle = targetAngle;
+
+  // Pause between 5–10 seconds
+  delay(random(5000, 10001));
+}
+
+Led Lights code 
+const int redLEDPin = 7;  // Connect the LED to digital pin 7
+
+void setup() {
+  pinMode(redLEDPin, OUTPUT);
+  digitalWrite(redLEDPin, HIGH);  // Turn the LED on
+}
+
+void loop() {
+  // Do nothing – LED stays on
+}
